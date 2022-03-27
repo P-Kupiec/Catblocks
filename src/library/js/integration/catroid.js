@@ -106,6 +106,10 @@ export class Catroid {
       }
       return 'hidden';
     };
+
+    Blockly.ContextMenuRegistry.registry.getItem('blockHelp').callback = function (scope) {
+      Android.helpBrick(scope.block.id);
+    };
   }
 
   createModifiableWorkspace() {
