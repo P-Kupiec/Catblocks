@@ -110,6 +110,19 @@ export class Catroid {
     Blockly.ContextMenuRegistry.registry.getItem('blockHelp').callback = function (scope) {
       Android.helpBrick(scope.block.id);
     };
+
+    Blockly.ContextMenuRegistry.registry.getItem('blockHelp').displayText = function () {
+      return Blockly.CatblocksMsgs.getCurrentLocaleValues()['HELP'];
+    };
+
+    Blockly.ContextMenuRegistry.registry.getItem('blockHelp').preconditionFn = function (scope) {
+      const block = scope.block;
+      
+      if (block.isMovable()) {
+        return 'enabled';
+      }
+      return 'hidden';
+    };
   }
 
   createModifiableWorkspace() {
