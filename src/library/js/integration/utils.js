@@ -364,11 +364,12 @@ export const renderBrick = (parentBrick, jsonBrick, brickListType, workspace) =>
     });
     if (childBrick.type === 'ParameterizedBrick') {
       try {
-        let dropdownString = childBrick.inputList[0].fieldRow[1].value_;
-        let numOfLists = parseInt(dropdownString.charAt(0));
+        const dropdownString = childBrick.inputList[0].fieldRow[1].value_;
+        const numOfLists = parseInt(dropdownString.charAt(0));
 
         if (numOfLists > 1) {
-          childBrick.inputList[0].fieldRow[0].value_ = CatblocksMsgs.getCurrentLocaleValues()['ASSERTION_PARAMETERIZED_FOREACH_PLURAL'];
+          childBrick.inputList[0].fieldRow[0].value_ =
+            CatblocksMsgs.getCurrentLocaleValues()['ASSERTION_PARAMETERIZED_FOREACH_PLURAL'];
         }
       } catch (error) {
         console.log(error);
