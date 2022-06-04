@@ -112,9 +112,9 @@ export class Catroid {
       Android.helpBrick(scope.block.id);
     };
 
-    Blockly.ContextMenuRegistry.registry.getItem('blockHelp').displayText = function () {
-      return Blockly.CatblocksMsgs.getCurrentLocaleValues()['HELP'];
-    };
+    // Blockly.ContextMenuRegistry.registry.getItem('blockHelp').displayText = function () {
+    //   return Blockly.CatblocksMsgs.getCurrentLocaleValues()['HELP'];
+    // };
 
     Blockly.ContextMenuRegistry.registry.getItem('blockHelp').preconditionFn = function (scope) {
       const block = scope.block;
