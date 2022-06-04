@@ -112,9 +112,9 @@ export class Catroid {
       Android.helpBrick(scope.block.id);
     };
 
-    // Blockly.ContextMenuRegistry.registry.getItem('blockHelp').displayText = function () {
-    //   return Blockly.CatblocksMsgs.getCurrentLocaleValues()['HELP'];
-    // };
+    Blockly.ContextMenuRegistry.registry.getItem('blockHelp').displayText = function () {
+      return CatblocksMsgs.getCurrentLocaleValues()['HELP'];
+    };
 
     Blockly.ContextMenuRegistry.registry.getItem('blockHelp').preconditionFn = function (scope) {
       const block = scope.block;
@@ -124,6 +124,29 @@ export class Catroid {
       }
       return 'enabled';
     };
+    // const helpItem = {
+    //   displayText: CatblocksMsgs.getCurrentLocaleValues()['HELP'],
+    //   preconditionFn: function (scope) {
+    //     const block = scope.block;
+    //     if (block && block.type) {
+    //       return 'enabled' ;
+    //     }
+    //     return 'hidden';
+    //   },
+    //   callback: function (scope) {
+    //     if (scope && scope.block && scope.block.id) {
+    //       try {
+    //         Android.helpBrick(scope.block.id);
+    //       } finally {
+    //         // ignore
+    //       }
+    //     }
+    //   },
+    //   scopeType: Blockly.ContextMenuRegistry.ScopeType.BLOCK,
+    //   id: 'catblocks-help',
+    //   weight: -6
+    // };
+    // Blockly.ContextMenuRegistry.registry.register(helpItem);
   }
 
   createModifiableWorkspace() {
