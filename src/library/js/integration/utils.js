@@ -375,11 +375,13 @@ export const renderBrick = (parentBrick, jsonBrick, brickListType, workspace) =>
               CatblocksMsgs.getCurrentLocaleValues()[currentBrick.string_value[0]];
           } else {
             childBrick.inputList[0].fieldRow[currentBrick.string_field].value_ =
-            CatblocksMsgs.getCurrentLocaleValues()[currentBrick.string_value[0]] + " " + CatblocksMsgs.getCurrentLocaleValues()[currentBrick.string_value[1]];
+              CatblocksMsgs.getCurrentLocaleValues()[currentBrick.string_value[0]] +
+              ' ' +
+              CatblocksMsgs.getCurrentLocaleValues()[currentBrick.string_value[1]];
           }
           if (childBrick.type === 'ParameterizedBrick') {
             childBrick.inputList[0].fieldRow[0].value_ =
-            CatblocksMsgs.getCurrentLocaleValues()[currentBrick.string_value_additional];
+              CatblocksMsgs.getCurrentLocaleValues()[currentBrick.string_value_additional];
           }
         }
       } catch (error) {
