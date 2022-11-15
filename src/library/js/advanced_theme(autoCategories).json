@@ -1,0 +1,74 @@
+{
+  "componentStyles": {
+    "workspaceBackgroundColour": "#1a1a1a",
+    "scrollbarColour": "#2c2c2c"
+  },
+  "blockStyles": {
+    "auto_#26a6ae": {
+      "colourPrimary": "#1a1a1a",
+      "colourSecondary": "#1a1a1a",
+      "colourTertiary": "#1a1a1a"
+    },
+    "auto_#f99761": {
+      "colourPrimary": "#1a1a1a",
+      "colourSecondary": "#1a1a1a",
+      "colourTertiary": "#1a1a1a"
+    },
+    "auto_#95750c": {
+      "colourPrimary": "#1a1a1a",
+      "colourSecondary": "#1a1a1a",
+      "colourTertiary": "#1a1a1a"
+    },
+    "auto_#ffffff": {
+      "colourPrimary": "#1a1a1a",
+      "colourSecondary": "#1a1a1a",
+      "colourTertiary": "#1a1a1a"
+    },
+    "auto_#cc73a1": {
+      "colourPrimary": "#1a1a1a",
+      "colourSecondary": "#1a1a1a",
+      "colourTertiary": "#1a1a1a"
+    },
+    "auto_#cf5717": {
+      "colourPrimary": "#1a1a1a",
+      "colourSecondary": "#1a1a1a",
+      "colourTertiary": "#ff1a1a"
+    },
+    "auto_#feCC47": {
+      "colourPrimary": "#1a1a1a",
+      "colourSecondary": "#1a1a1a",
+      "colourTertiary": "#1a1a1a"
+    },
+    "auto_#6b9c49": {
+      "colourPrimary": "#1a1a1a",
+      "colourSecondary": "#1a1a1a",
+      "colourTertiary": "#1a1a1a"
+    },
+    "auto_#408ac5": {
+      "colourPrimary": "#1a1a1a",
+      "colourSecondary": "#1a1a1a",
+      "colourTertiary": "#1a1a1a"
+    },
+    "auto_#2f5415": {
+      "colourPrimary": "#1a1a1a",
+      "colourSecondary": "#1a1a1a",
+      "colourTertiary": "#1a1a1a"
+    },
+    "auto_#999999": {
+      "colourPrimary": "#1a1a1a",
+      "colourSecondary": "#1a1a1a",
+      "colourTertiary": "#1a1a1a"
+    },
+    "auto_#8f4cba": {
+      "colourPrimary": "#1a1a1a",
+      "colourSecondary": "#1a1a1a",
+      "colourTertiary": "#1a1a1a"
+    },
+    "auto_#f14e50": {
+      "colourPrimary": "#1a1a1a",
+      "colourSecondary": "#1a1a1a",
+      "colourTertiary": "#1a1a1a"
+    }
+  }
+
+}

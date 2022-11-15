@@ -401,6 +401,11 @@ export const renderBrick = (parentBrick, jsonBrick, brickListType, workspace) =>
   }
 
   if (childBrick && childBrick.inputList && childBrick.inputList[0] && childBrick.inputList[0].fieldRow) {
+    if (workspace.themeManager_.theme_.name === "advancedTheme") {
+      advancedModeAddParentheses(childBrick);
+      advancedModeAddCurlyBrackets(childBrick);
+      advancedModeAddSemicolons(childBrick);
+    }
     for (let i = 0; i < childBrick.inputList.length; i++) {
       for (let j = 0; j < childBrick.inputList[i].fieldRow.length; j++) {
         if (childBrick.inputList[i].fieldRow[j].name && childBrick.inputList[i].fieldRow[j].name.endsWith('_INFO')) {
@@ -586,3 +591,56 @@ export const showFormulaPopup = formula => {
     $('#formulaPopup').modal('show');
   }
 };
+
+function advancedModeAddParentheses(childBrick) {
+  for (const input of childBrick.inputList) {
+    for (const field in input.fieldRow) {
+      if (field > 0) {
+        if (input.fieldRow[field - 1].constructor.name === "FieldTextInput") {
+          if (input.fieldRow[field].constructor.name === "FieldImage") {
+            const sourceBlock = input.fieldRow[field].sourceBlock_;
+            const labelField = new Blockly.FieldLabel('');
+            labelField.setSourceBlock(sourceBlock);
+            input.fieldRow[field] = labelField;
+            input.fieldRow[field].value_ = "";
+          }
+          input.fieldRow[field - 2].value_ += " (";
+          input.fieldRow[field].value_ = ")" + input.fieldRow[field].value_;
+        }
+      }
+    }
+  }
+}
+
+function advancedModeAddCurlyBrackets (childBrick) {
+  if (childBrick.inputList.some(field => field.name === "SUBSTACK")) {
+    const firstRow = childBrick.inputList[0].fieldRow;
+    firstRow[firstRow.length - 1].value_ += ' {';
+    const sourceBlock = childBrick.inputList[0].sourceBlock_;
+    const labelField = new Blockly.FieldLabel('}');
+    labelField.setSourceBlock(sourceBlock);
+    if (childBrick.type === "IfLogicBeginBrick" || childBrick.type === "PhiroIfLogicBeginBrick" || childBrick.type === "RaspiIfLogicBeginBrick") {
+      childBrick.inputList[2].fieldRow[0].value_ = "} " + childBrick.inputList[2].fieldRow[0].value_ + " {";
+      childBrick.inputList[4].fieldRow[0].value_ = "}";
+    }
+    if (childBrick.inputList.length === 3) {
+      childBrick.inputList[2].setAlign(Blockly.ALIGN_LEFT);
+      childBrick.inputList[2].fieldRow[0] = labelField;
+    }
+    if (childBrick.type === 'ParameterizedBrick') {
+      childBrick.inputList[2].fieldRow[5].value_ += " }";
+    }
+  }
+}
+
+function advancedModeAddSemicolons (childBrick) {
+  if (childBrick.inputList.length === 1) {
+    let character = ';';
+    if (childBrick.type === 'StartScript' || childBrick.type.includes('When')) {
+      character = ':';
+      childBrick.hat = 'top';
+    }
+    const fieldRow = childBrick.inputList[0].fieldRow;
+    fieldRow[fieldRow.length - 1].value_ += character;
+  }
+}

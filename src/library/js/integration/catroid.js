@@ -16,6 +16,7 @@ import {
   buildUserDefinedBrick
 } from './utils';
 import { CatblocksMsgs } from '../catblocks_msgs';
+import advancedTheme from '../advanced_theme.json';
 
 export class Catroid {
   constructor() {
@@ -32,6 +33,11 @@ export class Catroid {
     generateFormulaModal();
     createLoadingAnimation();
 
+    if (this.config.isAdvanced) {
+      Android.showMessage("Advanced: true");
+      this.setAdvancedTheme();
+    }
+
     if (window.CatBlocks) {
       this.insertRightMediaURI();
     }
@@ -39,7 +45,7 @@ export class Catroid {
       document.documentElement.style.direction = 'rtl';
     }
     await CatblocksMsgs.setLocale(this.config.language, this.config.i18n);
-
+    
     const workspaceItem = {
       displayText: CatblocksMsgs.getCurrentLocaleValues()['SWITCH_TO_1D'],
       preconditionFn: function (scope) {
@@ -200,7 +206,7 @@ export class Catroid {
     this.workspace.addChangeListener(event => {
       if (event.type == Blockly.Events.BLOCK_DRAG && !event.isStart) {
         const droppedBrick = this.workspace.getBlockById(event.blockId);
-        const isTopBrick = droppedBrick.hat !== undefined;
+        const isTopBrick = droppedBrick.hat !== undefined && droppedBrick.hat !== '';
         const position = droppedBrick.getRelativeToSurfaceXY();
 
         if (isTopBrick) {
@@ -416,5 +422,21 @@ export class Catroid {
       }
     }
     return '';
+  }
+
+  setAdvancedTheme() {
+    const advTheme = Blockly.Theme.defineTheme('advancedTheme', advancedTheme);
+    this.workspace.setTheme(advTheme);
+    this.workspace.renderer_.constants_.DUMMY_INPUT_MIN_HEIGHT = 0; // Allows to change size
+    this.workspace.renderer_.constants_.MEDIUM_PADDING = 5; // Padding of block left & right
+    this.workspace.renderer_.constants_.FIELD_BORDER_RECT_HEIGHT = 15; // Determines height of block with input field
+    this.workspace.renderer_.constants_.FIELD_TEXT_HEIGHT = 15; // Determines heigh of block without input field
+    this.workspace.renderer_.constants_.BOTTOM_ROW_AFTER_STATEMENT_MIN_HEIGHT = 15; // Height of bottom part of e.g. 'if' block
+    this.workspace.renderer_.constants_.FIELD_BORDER_RECT_X_PADDING = 0;
+    this.workspace.renderer_.constants_.BETWEEN_STATEMENT_PADDING_Y = 0;
+    const styleOfInputFields = document.createElement('style');
+    document.head.appendChild(styleOfInputFields);
+    styleOfInputFields.sheet.insertRule('.blocklyNonEditableText > rect:not(.blocklyDropdownRect), .blocklyEditableText > rect:not(.blocklyDropdownRect) {fill: #1a1a1a !important;}');
+    styleOfInputFields.sheet.insertRule('.blocklyNonEditableText > text, .blocklyEditableText > text, .blocklyNonEditableText > g > text, .blocklyEditableText > g > text {fill: #fff !important;}');
   }
 }

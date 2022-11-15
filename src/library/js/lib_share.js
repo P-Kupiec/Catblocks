@@ -1,8 +1,10 @@
 import { Share } from './integration/share';
 import { Parser } from '../../common/js/parser/parser';
 import './catblocks_msgs';
-import './blocks';
+// import './blocks';
 import { preparePaths } from './lib_utils';
+import { setColours } from './blocks/colours';
+import { initBricks } from './blocks/bricks';
 
 let catblocks_instance = undefined;
 
@@ -25,7 +27,9 @@ export class CatBlocks {
     if (!config) {
       throw new Error('No configuration given');
     }
-
+    
+    initBricks(config.isAdvanced);
+    setColours();
     catblocks_instance = new CatBlocks(config);
 
     preparePaths(catblocks_instance);
