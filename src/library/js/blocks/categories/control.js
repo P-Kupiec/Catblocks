@@ -27,7 +27,7 @@ export default {
         height: 24,
         width: 24,
         flip_rtl: true,
-        name: 'ADVANCED_MODE_PLACEHOLDER_INFO'
+        name: 'ADVANCED_MODE_PLACEHOLDER'
       }
     ]
   },
@@ -105,7 +105,7 @@ export default {
         height: 24,
         width: 24,
         flip_rtl: true,
-        name: 'ADVANCED_MODE_PLACEHOLDER_INFO'
+        name: 'ADVANCED_MODE_PLACEHOLDER'
       }
     ],
     args3: [
@@ -121,7 +121,7 @@ export default {
         height: 24,
         width: 24,
         flip_rtl: true,
-        name: 'ADVANCED_MODE_PLACEHOLDER_INFO'
+        name: 'ADVANCED_MODE_PLACEHOLDER'
       }
     ]
   },
@@ -159,7 +159,7 @@ export default {
         height: 24,
         width: 24,
         flip_rtl: true,
-        name: 'ADVANCED_MODE_PLACEHOLDER_INFO'
+        name: 'ADVANCED_MODE_PLACEHOLDER'
       }
     ]
   },
@@ -177,7 +177,7 @@ export default {
         height: 24,
         width: 24,
         flip_rtl: true,
-        name: 'ADVANCED_MODE_PLACEHOLDER_INFO'
+        name: 'ADVANCED_MODE_PLACEHOLDER'
       }
     ]
   },
@@ -223,7 +223,7 @@ export default {
         height: 24,
         width: 24,
         flip_rtl: true,
-        name: 'ADVANCED_MODE_PLACEHOLDER_INFO'
+        name: 'ADVANCED_MODE_PLACEHOLDER'
       }
     ]
   },
@@ -269,7 +269,7 @@ export default {
         height: 24,
         width: 24,
         flip_rtl: true,
-        name: 'ADVANCED_MODE_PLACEHOLDER_INFO'
+        name: 'ADVANCED_MODE_PLACEHOLDER'
       }
     ]
   },
@@ -428,7 +428,7 @@ export default {
         height: 24,
         width: 24,
         flip_rtl: true,
-        name: 'ADVANCED_MODE_PLACEHOLDER_INFO'
+        name: 'ADVANCED_MODE_PLACEHOLDER'
       }
     ]
   },
@@ -488,7 +488,7 @@ export default {
         height: 24,
         width: 24,
         flip_rtl: true,
-        name: 'ADVANCED_MODE_PLACEHOLDER_INFO'
+        name: 'ADVANCED_MODE_PLACEHOLDER'
       }
     ]
   },
@@ -566,7 +566,7 @@ export default {
         height: 24,
         width: 24,
         flip_rtl: true,
-        name: 'ADVANCED_MODE_PLACEHOLDER_INFO'
+        name: 'ADVANCED_MODE_PLACEHOLDER'
       }
     ],
     args3: [
@@ -582,7 +582,7 @@ export default {
         height: 24,
         width: 24,
         flip_rtl: true,
-        name: 'ADVANCED_MODE_PLACEHOLDER_INFO'
+        name: 'ADVANCED_MODE_PLACEHOLDER'
       }
     ]
   },
@@ -622,7 +622,7 @@ export default {
         height: 24,
         width: 24,
         flip_rtl: true,
-        name: 'ADVANCED_MODE_PLACEHOLDER_INFO'
+        name: 'ADVANCED_MODE_PLACEHOLDER'
       }
     ],
     args3: [
@@ -638,7 +638,7 @@ export default {
         height: 24,
         width: 24,
         flip_rtl: true,
-        name: 'ADVANCED_MODE_PLACEHOLDER_INFO'
+        name: 'ADVANCED_MODE_PLACEHOLDER'
       }
     ]
   }

@@ -429,9 +429,9 @@ export class Catroid {
     this.workspace.setTheme(advTheme);
     this.workspace.renderer_.constants_.DUMMY_INPUT_MIN_HEIGHT = 0; // Allows to change size
     this.workspace.renderer_.constants_.MEDIUM_PADDING = 5; // Padding of block left & right
-    this.workspace.renderer_.constants_.FIELD_BORDER_RECT_HEIGHT = 15; // Determines height of block with input field
-    this.workspace.renderer_.constants_.FIELD_TEXT_HEIGHT = 15; // Determines heigh of block without input field
-    this.workspace.renderer_.constants_.BOTTOM_ROW_AFTER_STATEMENT_MIN_HEIGHT = 15; // Height of bottom part of e.g. 'if' block
+    this.workspace.renderer_.constants_.FIELD_BORDER_RECT_HEIGHT = 14; // Determines height of block with input field
+    this.workspace.renderer_.constants_.FIELD_TEXT_HEIGHT = 14; // Determines heigh of block without input field
+    this.workspace.renderer_.constants_.BOTTOM_ROW_AFTER_STATEMENT_MIN_HEIGHT = 14; // Height of bottom part of e.g. 'if' block
     this.workspace.renderer_.constants_.FIELD_BORDER_RECT_X_PADDING = 0;
     this.workspace.renderer_.constants_.BETWEEN_STATEMENT_PADDING_Y = 0;
     const styleOfInputFields = document.createElement('style');

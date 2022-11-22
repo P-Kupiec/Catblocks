@@ -300,6 +300,11 @@ export const renderAndConnectBlocksInList = (parentBrick, brickList, brickListTy
     } else {
       brickIDGenerator.createBrickID(childBrick);
     }
+    if (workspace.themeManager_.theme_.name === "advancedTheme") {
+      if (childBrick.styleName_ === 'disabled') {
+        advancedModeCommentOutBricks(childBrick);
+      }
+    }
 
     if (parentBrick === null && brickList[i].userBrickId !== undefined) {
       // When there is no parentBrick but the userBrickId is set
@@ -420,6 +425,9 @@ export const renderBrick = (parentBrick, jsonBrick, brickListType, workspace) =>
             }
           }
         }
+        if (childBrick.inputList[i].fieldRow[j].name && childBrick.inputList[i].fieldRow[j].name === 'ADVANCED_MODE_PLACEHOLDER') {
+          childBrick.inputList[i].fieldRow[j].visible_ = false;
+        }
       }
     }
   }
@@ -435,6 +443,7 @@ export const renderBrick = (parentBrick, jsonBrick, brickListType, workspace) =>
       Blockly.utils.dom.addClass(childBrick.pathObject.svgRoot, 'catblockls-blockly-invisible');
     } else if (jsonBrick.commentedOut) {
       Blockly.utils.dom.addClass(childBrick.pathObject.svgRoot, 'catblocks-blockly-disabled');
+      childBrick.setStyle('disabled');
     }
   }
 
@@ -594,18 +603,18 @@ export const showFormulaPopup = formula => {
 
 function advancedModeAddParentheses(childBrick) {
   for (const input of childBrick.inputList) {
-    for (const field in input.fieldRow) {
-      if (field > 0) {
-        if (input.fieldRow[field - 1].constructor.name === "FieldTextInput") {
-          if (input.fieldRow[field].constructor.name === "FieldImage") {
-            const sourceBlock = input.fieldRow[field].sourceBlock_;
-            const labelField = new Blockly.FieldLabel('');
-            labelField.setSourceBlock(sourceBlock);
-            input.fieldRow[field] = labelField;
-            input.fieldRow[field].value_ = "";
-          }
-          input.fieldRow[field - 2].value_ += " (";
-          input.fieldRow[field].value_ = ")" + input.fieldRow[field].value_;
+    for (let field = 1; field < input.fieldRow.length; field++) {
+      if (input.fieldRow[field].constructor.name === "FieldTextInput") {
+        advancedModeRemoveWhiteSpaces(input.fieldRow[field]);
+
+        input.fieldRow[field - 1].value_ += " (";
+
+        if (input.fieldRow[field + 1].constructor.name === "FieldImage") {
+          const sourceBlock = input.fieldRow[field + 1].sourceBlock_;
+          const labelField = new Blockly.FieldLabel('');
+          labelField.setSourceBlock(sourceBlock);
+          input.fieldRow[field + 1] = labelField;
+          input.fieldRow[field + 1].value_ = ")";
         }
       }
     }
@@ -616,14 +625,14 @@ function advancedModeAddCurlyBrackets (childBrick) {
   if (childBrick.inputList.some(field => field.name === "SUBSTACK")) {
     const firstRow = childBrick.inputList[0].fieldRow;
     firstRow[firstRow.length - 1].value_ += ' {';
-    const sourceBlock = childBrick.inputList[0].sourceBlock_;
-    const labelField = new Blockly.FieldLabel('}');
-    labelField.setSourceBlock(sourceBlock);
     if (childBrick.type === "IfLogicBeginBrick" || childBrick.type === "PhiroIfLogicBeginBrick" || childBrick.type === "RaspiIfLogicBeginBrick") {
       childBrick.inputList[2].fieldRow[0].value_ = "} " + childBrick.inputList[2].fieldRow[0].value_ + " {";
       childBrick.inputList[4].fieldRow[0].value_ = "}";
     }
     if (childBrick.inputList.length === 3) {
+      const sourceBlock = childBrick.inputList[0].sourceBlock_;
+      const labelField = new Blockly.FieldLabel('}');
+      labelField.setSourceBlock(sourceBlock);
       childBrick.inputList[2].setAlign(Blockly.ALIGN_LEFT);
       childBrick.inputList[2].fieldRow[0] = labelField;
     }
@@ -635,12 +644,51 @@ function advancedModeAddCurlyBrackets (childBrick) {
 
 function advancedModeAddSemicolons (childBrick) {
   if (childBrick.inputList.length === 1) {
-    let character = ';';
     if (childBrick.type === 'StartScript' || childBrick.type.includes('When')) {
-      character = ':';
       childBrick.hat = 'top';
     }
     const fieldRow = childBrick.inputList[0].fieldRow;
-    fieldRow[fieldRow.length - 1].value_ += character;
+    fieldRow[fieldRow.length - 1].value_ += ';';
+  }
+}
+
+function advancedModeRemoveWhiteSpaces(field) {
+  field.value_ = field.value_.trim();
+
+  const replaceDict = {
+    '( ': '(',
+    ' )': ')',
+    ' ,': ',',
+    '  ': ' ',
+    '- ': '-',
+  };
+  // const replaceRegex = new RegExp(Object
+  //   .keys(replaceObj)
+  //   .map(e => e.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+  //   .join('|'), 'g');
+  // field.value_ = field.value_.replace(replaceRegex, e => replaceObj[e]);
+
+  for (const key in replaceDict){
+    field.value_ = field.value_.replaceAll(key, replaceDict[key]);
+  }
+}
+
+function advancedModeCommentOutBricks(childBrick) {
+  childBrick.inputList[0].fieldRow[0].value_ = '// ' + childBrick.inputList[0].fieldRow[0].value_;
+  if (childBrick.type === "IfLogicBeginBrick" || childBrick.type === "PhiroIfLogicBeginBrick" || childBrick.type === "RaspiIfLogicBeginBrick") {
+    childBrick.inputList[2].fieldRow[0].value_ = '// ' + childBrick.inputList[2].fieldRow[0].value_;
+    childBrick.inputList[4].fieldRow[0].value_ = '// ' + childBrick.inputList[4].fieldRow[0].value_;
+  }
+  if (childBrick.inputList.length === 3) {
+    childBrick.inputList[2].fieldRow[0].value_ = '// ' + childBrick.inputList[2].fieldRow[0].value_;
+  }
+  
+  const brickElements = document.getElementById(childBrick.pathObject.svgRoot.id).childNodes;
+  let count = 1;
+  while (count < brickElements.length && !brickElements[count].id) {
+    if (brickElements[count].classList[0] !== 'blocklyNonEditableText' && brickElements[count].classList[0] !== 'blocklyEditableText') {
+      brickElements[count].style.opacity = 0.5;
+    }
+    count++;
   }
 }
