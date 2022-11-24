@@ -656,6 +656,7 @@ function advancedModeAddParentheses(childBrick) {
   for (const input of childBrick.inputList) {
     for (let field = 1; field < input.fieldRow.length; field++) {
       if (input.fieldRow[field].constructor.name === "FieldTextInput") {
+        advancedModeRemoveWhiteSpacesInFormulas(input.fieldRow[field]);
 
         input.fieldRow[field - 1].value_ += " (";
 
@@ -699,5 +700,21 @@ function advancedModeAddSemicolonsAndClassifyTopBricks (childBrick) {
     }
     const fieldRow = childBrick.inputList[0].fieldRow;
     fieldRow[fieldRow.length - 1].value_ += ';';
+  }
+}
+
+function advancedModeRemoveWhiteSpacesInFormulas(field) {
+  field.value_ = field.value_.trim();
+
+  const replaceDict = {
+    '( ': '(',
+    ' )': ')',
+    ' ,': ',',
+    '  ': ' ',
+    '- ': '-',
+  };
+
+  for (const key in replaceDict){
+    field.value_ = field.value_.replaceAll(key, replaceDict[key]);
   }
 }
