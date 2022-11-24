@@ -443,7 +443,9 @@ export const renderBrick = (parentBrick, jsonBrick, brickListType, workspace) =>
       Blockly.utils.dom.addClass(childBrick.pathObject.svgRoot, 'catblockls-blockly-invisible');
     } else if (jsonBrick.commentedOut) {
       Blockly.utils.dom.addClass(childBrick.pathObject.svgRoot, 'catblocks-blockly-disabled');
-      childBrick.setStyle('disabled');
+      if (workspace.themeManager_.theme_.name === "advancedTheme") {
+        childBrick.setStyle('disabled');
+      }
     }
   }
 
@@ -662,11 +664,6 @@ function advancedModeRemoveWhiteSpaces(field) {
     '  ': ' ',
     '- ': '-',
   };
-  // const replaceRegex = new RegExp(Object
-  //   .keys(replaceObj)
-  //   .map(e => e.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
-  //   .join('|'), 'g');
-  // field.value_ = field.value_.replace(replaceRegex, e => replaceObj[e]);
 
   for (const key in replaceDict){
     field.value_ = field.value_.replaceAll(key, replaceDict[key]);

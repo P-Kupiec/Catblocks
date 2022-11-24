@@ -2,7 +2,7 @@
   "componentStyles": {
     "workspaceBackgroundColour": "#1a1a1a",
     "scrollbarColour": "#2c2c2c",
-    "selectedGlowColour": "#99aab5",
+    "selectedGlowColour": "#9a9a9a",
     "insertionMarkerColour": "#7c7c7c"
   },
   "fontStyle": {
