@@ -39,7 +39,7 @@ export class Catroid {
     generateFormulaModal();
     createLoadingAnimation();
 
-    if (this.config.isAdvanced) {
+    if (this.config.advancedMode) {
       this.setAdvancedTheme();
     }
 
@@ -257,7 +257,7 @@ export class Catroid {
   handleWorkspaceChange(event) {
     if (event.type == Blockly.Events.BLOCK_DRAG && !event.isStart) {
       const droppedBrick = this.workspace.getBlockById(event.blockId);
-      const isTopBrick = droppedBrick.hat !== undefined;
+      const isTopBrick = droppedBrick.hat !== undefined && droppedBrick.hat !== '';
       const position = droppedBrick.getRelativeToSurfaceXY();
 
       if (isTopBrick) {

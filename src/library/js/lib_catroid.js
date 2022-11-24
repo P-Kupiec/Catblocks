@@ -23,7 +23,7 @@ export class CatBlocks {
     if (!config) {
       throw new Error('No configuration given');
     }
-    initBricks(config.isAdvanced);
+    initBricks(config.advancedMode);
     setColours();
 
     catblocks_instance = new CatBlocks(config);
