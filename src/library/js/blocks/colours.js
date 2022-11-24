@@ -59,6 +59,10 @@ const initCatblocksColours = (colours = colourCodes, blockly = Blockly) => {
   }
 };
 
-(() => {
-  initCatblocksColours(colourCodes, Blockly);
-})();
+export function setColours() {
+  initCatblocksColours();
+}
+
+// (() => {
+//   initCatblocksColours(colourCodes, Blockly);
+// })();
