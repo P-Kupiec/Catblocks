@@ -302,6 +302,11 @@ export const renderAndConnectBlocksInList = (parentBrick, brickList, brickListTy
     } else {
       brickIDGenerator.createBrickID(childBrick);
     }
+    if (workspace.themeManager_.theme_.name === "advancedTheme") {
+      if (childBrick.styleName_ === 'disabled') {
+        advancedModeCommentOutBricks(childBrick);
+      }
+    }
 
     if (parentBrick === null && brickList[i].userBrickId !== undefined) {
       // When there is no parentBrick but the userBrickId is set
@@ -440,6 +445,9 @@ export const renderBrick = (parentBrick, jsonBrick, brickListType, workspace) =>
       Blockly.utils.dom.addClass(childBrick.pathObject.svgRoot, 'catblockls-blockly-invisible');
     } else if (jsonBrick.commentedOut) {
       Blockly.utils.dom.addClass(childBrick.pathObject.svgRoot, 'catblocks-blockly-disabled');
+      if (workspace.themeManager_.theme_.name === "advancedTheme") {
+        childBrick.setStyle('disabled');
+      }
     }
   }
 
@@ -716,5 +724,25 @@ function advancedModeRemoveWhiteSpacesInFormulas(field) {
 
   for (const key in replaceDict){
     field.value_ = field.value_.replaceAll(key, replaceDict[key]);
+  }
+}
+
+function advancedModeCommentOutBricks(childBrick) {
+  childBrick.inputList[0].fieldRow[0].value_ = '// ' + childBrick.inputList[0].fieldRow[0].value_;
+  if (childBrick.type === "IfLogicBeginBrick" || childBrick.type === "PhiroIfLogicBeginBrick" || childBrick.type === "RaspiIfLogicBeginBrick") {
+    childBrick.inputList[2].fieldRow[0].value_ = '// ' + childBrick.inputList[2].fieldRow[0].value_;
+    childBrick.inputList[4].fieldRow[0].value_ = '// ' + childBrick.inputList[4].fieldRow[0].value_;
+  }
+  if (childBrick.inputList.length === 3) {
+    childBrick.inputList[2].fieldRow[0].value_ = '// ' + childBrick.inputList[2].fieldRow[0].value_;
+  }
+  
+  const brickElements = document.getElementById(childBrick.pathObject.svgRoot.id).childNodes;
+  let count = 1;
+  while (count < brickElements.length && !brickElements[count].id) {
+    if (brickElements[count].classList[0] !== 'blocklyNonEditableText' && brickElements[count].classList[0] !== 'blocklyEditableText') {
+      brickElements[count].style.opacity = 0.5;
+    }
+    count++;
   }
 }
