@@ -4,6 +4,7 @@
 
 import Blockly from 'blockly';
 import categories from './categories';
+import { initCatblocksColours } from './colours';
 
 export const getBrickScriptMapping = () => {
   return new Map()
@@ -117,6 +118,7 @@ const loadBricks = (cats = categories, blockly = Blockly, advancedMode) => {
 export function initBricks (advancedMode) {
   removeAllBricks(Blockly);
   loadBricks(categories, Blockly, advancedMode);
+  initCatblocksColours();
 }
 
 /**

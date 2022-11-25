@@ -4,7 +4,6 @@ import './catblocks_msgs';
 // import './blocks';
 import { preparePaths } from './lib_utils';
 import $ from 'jquery';
-import { setColours } from './blocks/colours';
 import { initBricks } from './blocks/bricks';
 
 let catblocks_instance = undefined;
@@ -24,7 +23,6 @@ export class CatBlocks {
       throw new Error('No configuration given');
     }
     initBricks(config.advancedMode);
-    setColours();
 
     catblocks_instance = new CatBlocks(config);
 
