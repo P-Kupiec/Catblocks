@@ -3,6 +3,7 @@ import { Parser } from '../../common/js/parser/parser';
 import './catblocks_msgs';
 import './blocks';
 import { preparePaths } from './lib_utils';
+import { initBricks } from './blocks/bricks';
 
 let catblocks_instance = undefined;
 
@@ -25,6 +26,7 @@ export class CatBlocks {
     if (!config) {
       throw new Error('No configuration given');
     }
+    initBricks(config.advancedMode);
 
     catblocks_instance = new CatBlocks(config);
 
