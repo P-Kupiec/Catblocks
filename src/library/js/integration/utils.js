@@ -661,6 +661,9 @@ export const getColorForBrickCategory = categoryName => {
 };
 
 function advancedModeAddParentheses(childBrick) {
+  if (childBrick.type === 'NoteBrick') {
+    return;
+  }
   for (const input of childBrick.inputList) {
     for (let field = 1; field < input.fieldRow.length; field++) {
       if (input.fieldRow[field].constructor.name === "FieldTextInput") {
@@ -702,10 +705,15 @@ function advancedModeAddCurlyBrackets (childBrick) {
 }
 
 function advancedModeAddSemicolonsAndClassifyTopBricks (childBrick) {
+  if (childBrick.type === 'NoteBrick') {
+    return;
+  }
   if (childBrick.inputList.length === 1) {
     if (childBrick.type === 'StartScript' || childBrick.type.includes('When') || childBrick.type === 'BroadcastScript') {
       childBrick.hat = 'top';
+      return;
     }
+    
     const fieldRow = childBrick.inputList[0].fieldRow;
     fieldRow[fieldRow.length - 1].value_ += ';';
   }
@@ -738,6 +746,8 @@ function advancedModeCommentOutBricks(childBrick) {
   }
   if (childBrick.type === 'NoteBrick') {
     Blockly.utils.dom.addClass(childBrick.pathObject.svgRoot, 'catblocks-blockly-disabled');
+    childBrick.inputList[0].fieldRow[0].value_ = '//';
+    childBrick.inputList[0].fieldRow[1].value_ = childBrick.inputList[0].fieldRow[1].value_.slice(1, -1);
   }
   
   const brickElements = document.getElementById(childBrick.pathObject.svgRoot.id).childNodes;
