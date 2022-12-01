@@ -667,7 +667,7 @@ export const getColorForBrickCategory = categoryName => {
 };
 
 function advancedModeAddParentheses(childBrick) {
-  if (childBrick.type === 'NoteBrick') {
+  if (childBrick.type === 'NoteBrick' || childBrick.type === 'UserDefinedScript') {
     return;
   }
   for (const input of childBrick.inputList) {
@@ -706,19 +706,19 @@ function advancedModeAddCurlyBrackets (childBrick) {
     }
     if (childBrick.type === 'ParameterizedBrick') {
       childBrick.inputList[2].fieldRow[5].value_ += " }";
-    } else if (childBrick.type === 'UserDefinedScript') {
-      childBrick.inputList[0].fieldRow[0].value_ += ' {';
-      const sourceBlock = childBrick.inputList[0].sourceBlock_;
-      const labelField = new Blockly.FieldLabel('}');
-      labelField.setSourceBlock(sourceBlock);
-      childBrick.inputList[2].setAlign(Blockly.ALIGN_LEFT);
-      childBrick.inputList[2].fieldRow[0] = labelField;
     }
+  } else if (childBrick.type === 'UserDefinedScript') {
+    childBrick.inputList[0].fieldRow[0].value_ += ' {';
+    const sourceBlock = childBrick.inputList[0].sourceBlock_;
+    const labelField = new Blockly.FieldLabel('}');
+    labelField.setSourceBlock(sourceBlock);
+    childBrick.inputList[2].setAlign(Blockly.ALIGN_LEFT);
+    childBrick.inputList[2].fieldRow[0] = labelField;
   }
 }
 
 function advancedModeAddSemicolonsAndClassifyTopBricks (childBrick) {
-  if (childBrick.type === 'NoteBrick') {
+  if (childBrick.type === 'NoteBrick' || childBrick.type === 'UserDefinedScript' || childBrick.styleName_ === 'user') {
     return;
   }
   if (childBrick.inputList.length === 1) {
