@@ -658,6 +658,9 @@ export const getColorForBrickCategory = categoryName => {
 };
 
 function advancedModeAddParentheses(childBrick) {
+  if (childBrick.type === 'UserDefinedScript') {
+    return;
+  }
   for (const input of childBrick.inputList) {
     for (let field = 1; field < input.fieldRow.length; field++) {
       if (input.fieldRow[field].constructor.name === "FieldTextInput") {
@@ -693,6 +696,13 @@ function advancedModeAddCurlyBrackets (childBrick) {
     }
     if (childBrick.type === 'ParameterizedBrick') {
       childBrick.inputList[2].fieldRow[5].value_ += " }";
+    } else if (childBrick.type === 'UserDefinedScript') {
+      childBrick.inputList[0].fieldRow[0].value_ += ' {';
+      const sourceBlock = childBrick.inputList[0].sourceBlock_;
+      const labelField = new Blockly.FieldLabel('}');
+      labelField.setSourceBlock(sourceBlock);
+      childBrick.inputList[2].setAlign(Blockly.ALIGN_LEFT);
+      childBrick.inputList[2].fieldRow[0] = labelField;
     }
   }
 }
