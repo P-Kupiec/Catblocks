@@ -325,7 +325,7 @@ export class Catroid {
       throw Error('Workspace not initialized. Did you call init?');
     }
 
-    const createdBricks = buildUserDefinedBrick(object);
+    const createdBricks = buildUserDefinedBrick(object, this.config.advancedMode);
     if (createdBricks) {
       createdBricks.forEach(brickName => {
         this.fixBrickMediaURI(brickName);

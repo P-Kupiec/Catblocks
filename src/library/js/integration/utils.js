@@ -501,7 +501,7 @@ export const lazyLoadImage = event => {
   });
 };
 
-export const buildUserDefinedBrick = object => {
+export const buildUserDefinedBrick = (object, advancedMode = false) => {
   const createdBricks = [];
 
   if (!object.userBricks) {
@@ -515,6 +515,9 @@ export const buildUserDefinedBrick = object => {
     Blockly.Blocks[brickName] = {
       init: function () {
         this.jsonInit(Blockly.Bricks[brickName]);
+        if (advancedMode) {
+          this.setStyle('user');
+        }
         this.setNextStatement(true, 'CatBlocksBrick');
         this.setPreviousStatement(true, 'CatBlocksBrick');
       }
@@ -527,6 +530,9 @@ export const buildUserDefinedBrick = object => {
     Blockly.Blocks[definitionBrickName] = {
       init: function () {
         this.jsonInit(Blockly.Bricks[definitionBrickName]);
+        if (advancedMode) {
+          this.setStyle('user');
+        }
         this.setPreviousStatement(true, 'UserDefinedReadOnly');
         this.setNextStatement(false, null);
       }
