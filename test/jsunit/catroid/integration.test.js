@@ -154,4 +154,14 @@ describe('Catroid Integration Advanced Mode tests', () => {
 
     expect(syntaxCharacters).toBe(true);
   });
+
+  test('Smaller vertical spacing test', async () => {
+    const blocksHeight = await page.evaluate(() => {
+      const blocks = document.querySelectorAll(".blocklyPath");
+      const ifBlock = Array.from(blocks).find(block => block.tooltip.type === 'StartScript');
+      return ifBlock.tooltip.height;
+    });
+
+    expect(blocksHeight < 40).toBe(true);
+  });
 });
