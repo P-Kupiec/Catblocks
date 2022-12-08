@@ -166,17 +166,17 @@ describe('Catroid Integration Advanced Mode tests', () => {
   });
 
   test('Semicolon test', async () => {
-    const blocksHeight = await page.evaluate(() => {
+    const semicolons = await page.evaluate(() => {
       const blocks = document.querySelectorAll(".blocklyPath");
       if (blocks[3].tooltip.inputList[0].fieldRow[5].value_ === ');' &&
-      blocks[12].tooltip.inputList[0].fieldRow[5].value_ === ');' &&
-      blocks[26].tooltip.inputList[0].fieldRow[2].value_ === ');') {
+          blocks[12].tooltip.inputList[0].fieldRow[5].value_ === ');' &&
+          blocks[26].tooltip.inputList[0].fieldRow[2].value_ === ');') {
         return true;
       } else {
         return false;
       }
     });
 
-    expect(blocksHeight < 40).toBe(true);
+    expect(semicolons).toBe(true);
   });
 });
