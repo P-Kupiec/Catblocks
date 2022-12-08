@@ -46,7 +46,6 @@ describe('Catroid Integration Position tests', () => {
         textOffset: document.querySelector('#WhenConditionScript-0-text').getBoundingClientRect().right
       };
     });
-
     const textToScriptBorderOffset = scriptOffset - textOffset;
     expect(textToScriptBorderOffset < 6).toBe(true);
   });
@@ -85,15 +84,113 @@ describe('Catroid Integration Advanced Mode tests', () => {
       advancedMode
     );
     await page.evaluate(async pProgramXML => {
-      await Test.CatroidCatBlocks.render(pProgramXML, 'Main Menu', 'Play', 'd9e76a0d-8f6b-44b4-887d-fdd31b7e5bf1');
+      await Test.CatroidCatBlocks.render(pProgramXML, 'Introduction', 'Caption', '7fc239bb-d330-4226-b075-0c4c545198e2');
     }, programXML);
   });
-  test('Background color check', async () => {
-    // debugger;
+  
+  test('Background color test', async () => {
     const backgroundColor = await page.evaluate(() => {
       return document.querySelector('#catroid .blocklySvg').style.backgroundColor;
     });
 
     expect(backgroundColor).toBe('rgb(26, 26, 26)');
+  });
+  
+  test('Blocks color test', async () => {
+    const allBlocksInAdvancedMode = await page.evaluate(() => {
+      const blocks = document.querySelectorAll(".blocklyPath");
+      let counter = 0;
+      let darkColor = true;
+      blocks.forEach(block => {
+        darkColor = block.attributes.fill.value === '#1a1a1a' && darkColor;
+        counter++;
+      });
+      darkColor = counter > 10 && darkColor;
+      return darkColor;
+    });
+
+    expect(allBlocksInAdvancedMode).toBe(true);
+  });
+
+  test('Blocks select color test', async () => {
+    const selectedGlowColour = await page.evaluate(() => {
+      const blocks = document.querySelectorAll(".blocklyPath");
+      return blocks[0].tooltip.workspace.themeManager_.theme_.componentStyles.selectedGlowColour;
+    });
+
+    expect(selectedGlowColour).toBe('#9a9a9a');
+  });
+
+  test('Input fields color test', async () => {
+    const inputFieldsInAdvancedMode = await page.evaluate(() => {
+      const inputFields = document.querySelectorAll(".blocklyEditableText > rect:not(.blocklyDropdownRect)");
+      let counter = 0;
+      let darkColor = true;
+      inputFields.forEach(field => {
+        darkColor = field.attributes.stroke.value === '#1a1a1a' && darkColor;
+        counter++;
+      });
+      darkColor = counter > 20 && darkColor;
+      return darkColor;
+    });
+
+    expect(inputFieldsInAdvancedMode).toBe(true);
+  });
+
+  test('JS Syntax characters test', async () => {
+    const syntaxCharacters = await page.evaluate(() => {
+      const blocks = document.querySelectorAll(".blocklyPath");
+      const ifBlock = Array.from(blocks).find(block => block.tooltip.type === 'IfThenLogicBeginBrick');
+
+      if (ifBlock.tooltip.inputList[0].fieldRow[0].value_ === 'If (' &&
+          ifBlock.tooltip.inputList[0].fieldRow[2].value_ === ')' &&
+          ifBlock.tooltip.inputList[0].fieldRow[3].value_ === 'is true then {' &&
+          ifBlock.tooltip.inputList[2].fieldRow[0].value_ === '}') {
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    expect(syntaxCharacters).toBe(true);
+  });
+
+  test('Smaller vertical spacing test', async () => {
+    const blocksHeight = await page.evaluate(() => {
+      const blocks = document.querySelectorAll(".blocklyPath");
+      const ifBlock = Array.from(blocks).find(block => block.tooltip.type === 'StartScript');
+      return ifBlock.tooltip.height;
+    });
+
+    expect(blocksHeight < 40).toBe(true);
+  });
+
+  test('Semicolon test', async () => {
+    const semicolons = await page.evaluate(() => {
+      const blocks = document.querySelectorAll(".blocklyPath");
+      if (blocks[3].tooltip.inputList[0].fieldRow[5].value_ === ');' &&
+          blocks[12].tooltip.inputList[0].fieldRow[5].value_ === ');' &&
+          blocks[26].tooltip.inputList[0].fieldRow[2].value_ === ');') {
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    expect(semicolons).toBe(true);
+  });
+
+  test('Formulas formatting test', async () => {
+    const formatted = await page.evaluate(() => {
+      const blocks = document.querySelectorAll(".blocklyPath");
+      if (blocks[4].tooltip.inputList[0].fieldRow[1].value_ === '"currentcaption" = 7' &&
+          blocks[24].tooltip.inputList[0].fieldRow[4].value_ === 'item("currentcaption", *Language List-Caption*)') {
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    expect(formatted).toBe(true);
   });
 });
