@@ -193,4 +193,17 @@ describe('Catroid Integration Advanced Mode tests', () => {
 
     expect(formatted).toBe(true);
   });
+
+  test('Commented out test', async () => {
+    const commentedOut = await page.evaluate(() => {
+      const blocks = document.querySelectorAll(".blocklyPath");
+      if (blocks[25].tooltip.inputList[0].fieldRow[0].value_ === '// Show variable (') {
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    expect(commentedOut).toBe(true);
+  });
 });
