@@ -667,18 +667,15 @@ export const getColorForBrickCategory = categoryName => {
 };
 
 export function advancedModeAddParentheses(childBrick, addBrickDialog = false) {
-  if (childBrick.type === 'NoteBrick' || childBrick.type === 'UserDefinedScript' && !addBrickDialog) {
+  if (childBrick.type === 'UserDefinedScript' && !addBrickDialog) {
     return;
   }
   for (const input of childBrick.inputList) {
     for (let field = 1; field < input.fieldRow.length; field++) {
       if (input.fieldRow[field].constructor.name === "FieldTextInput") {
-        advancedModeRemoveWhiteSpacesInFormulas(input.fieldRow[field]);
         if (addBrickDialog) {
           input.fieldRow[field].value_ = "...";
         }
-        
-        input.fieldRow[field - 1].value_ += " (";
 
         if (input.fieldRow[field + 1].constructor.name === "FieldImage") {
           const sourceBlock = input.fieldRow[field + 1].sourceBlock_;
@@ -686,7 +683,14 @@ export function advancedModeAddParentheses(childBrick, addBrickDialog = false) {
           labelField.setSourceBlock(sourceBlock);
           input.fieldRow[field + 1] = labelField;
           input.fieldRow[field + 1].value_ = ")";
+          
+          if (childBrick.type === 'NoteBrick' ) {
+            input.fieldRow[field + 1].value_ = "";
+            return;
+          }
         }
+        advancedModeRemoveWhiteSpacesInFormulas(input.fieldRow[field]);
+        input.fieldRow[field - 1].value_ += " (";
       }
     }
   }
