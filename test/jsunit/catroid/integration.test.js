@@ -198,4 +198,13 @@ describe('Catroid Integration Advanced Mode tests', () => {
 
     expect(formatted).toBe(true);
   });
+
+  test('Commented out bricks test', async () => {
+    const commentedOut = await page.evaluate(() => {
+      const blocks = document.querySelectorAll(".blocklyPath");
+      return blocks[25].tooltip.inputList[0].fieldRow[0].value_;
+    });
+
+    expect(commentedOut).toBe('// Show variable (');
+  }, 99999);
 });
