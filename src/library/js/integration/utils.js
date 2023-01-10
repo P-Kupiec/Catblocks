@@ -406,6 +406,7 @@ export const renderBrick = (parentBrick, jsonBrick, brickListType, workspace) =>
     if (workspace.themeManager_.theme_.name === "advancedTheme") {
       advancedModeAddParentheses(childBrick);
       advancedModeAddCurlyBrackets(childBrick);
+      advancedModeAddSemicolonsAndClassifyTopBricks(childBrick);
     }
     for (let i = 0; i < childBrick.inputList.length; i++) {
       for (let j = 0; j < childBrick.inputList[i].fieldRow.length; j++) {
@@ -705,5 +706,15 @@ function advancedModeAddCurlyBrackets (childBrick) {
     labelField.setSourceBlock(sourceBlock);
     childBrick.inputList[2].setAlign(Blockly.ALIGN_LEFT);
     childBrick.inputList[2].fieldRow[0] = labelField;
+  }
+}
+
+function advancedModeAddSemicolonsAndClassifyTopBricks (childBrick) {
+  if (childBrick.inputList.length === 1) {
+    if (childBrick.type === 'StartScript' || childBrick.type.includes('When') || childBrick.type === 'BroadcastScript') {
+      childBrick.hat = 'top';
+    }
+    const fieldRow = childBrick.inputList[0].fieldRow;
+    fieldRow[fieldRow.length - 1].value_ += ';';
   }
 }
