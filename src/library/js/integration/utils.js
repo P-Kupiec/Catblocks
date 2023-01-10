@@ -666,15 +666,18 @@ export const getColorForBrickCategory = categoryName => {
   return '#aaaaaa';
 };
 
-function advancedModeAddParentheses(childBrick) {
-  if (childBrick.type === 'NoteBrick' || childBrick.type === 'UserDefinedScript') {
+export function advancedModeAddParentheses(childBrick, addBrickDialog = false) {
+  if (childBrick.type === 'NoteBrick' || childBrick.type === 'UserDefinedScript' && !addBrickDialog) {
     return;
   }
   for (const input of childBrick.inputList) {
     for (let field = 1; field < input.fieldRow.length; field++) {
       if (input.fieldRow[field].constructor.name === "FieldTextInput") {
         advancedModeRemoveWhiteSpacesInFormulas(input.fieldRow[field]);
-
+        if (addBrickDialog) {
+          input.fieldRow[field].value_ = "...";
+        }
+        
         input.fieldRow[field - 1].value_ += " (";
 
         if (input.fieldRow[field + 1].constructor.name === "FieldImage") {
@@ -689,7 +692,7 @@ function advancedModeAddParentheses(childBrick) {
   }
 }
 
-function advancedModeAddCurlyBrackets (childBrick) {
+export function advancedModeAddCurlyBrackets (childBrick) {
   if (childBrick.inputList.some(field => field.name === "SUBSTACK")) {
     const sourceBlock = childBrick.inputList[0].sourceBlock_;
     const labelField = new Blockly.FieldLabel('}');
@@ -701,7 +704,7 @@ function advancedModeAddCurlyBrackets (childBrick) {
       childBrick.inputList[4].fieldRow[0] = labelField;
       childBrick.inputList[4].fieldRow[0].value_ = "}";
     }
-    if (childBrick.inputList.length === 3) {
+    if (childBrick.inputList.length === 3 && childBrick.type !== 'ParameterizedBrick') {
       childBrick.inputList[2].setAlign(Blockly.ALIGN_LEFT);
       childBrick.inputList[2].fieldRow[0] = labelField;
     }
@@ -718,7 +721,7 @@ function advancedModeAddCurlyBrackets (childBrick) {
   }
 }
 
-function advancedModeAddSemicolonsAndClassifyTopBricks (childBrick) {
+export function advancedModeAddSemicolonsAndClassifyTopBricks (childBrick) {
   if (childBrick.type === 'NoteBrick' || childBrick.type === 'UserDefinedScript' || childBrick.styleName_ === 'user') {
     return;
   }

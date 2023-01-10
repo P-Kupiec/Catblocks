@@ -206,5 +206,5 @@ describe('Catroid Integration Advanced Mode tests', () => {
     });
 
     expect(commentedOut).toBe('// Show variable (');
-  }, 99999);
+  });
 });
