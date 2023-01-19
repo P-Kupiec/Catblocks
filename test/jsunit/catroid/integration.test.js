@@ -89,10 +89,15 @@ describe('Catroid Integration Advanced Mode tests', () => {
       advancedMode
     );
     await page.evaluate(async pProgramXML => {
-      await Test.CatroidCatBlocks.render(pProgramXML, 'Introduction', 'Caption', '7fc239bb-d330-4226-b075-0c4c545198e2');
+      await Test.CatroidCatBlocks.render(
+        pProgramXML,
+        'Introduction',
+        'Caption',
+        '7fc239bb-d330-4226-b075-0c4c545198e2'
+      );
     }, programXML);
   });
-  
+
   test('Background color test', async () => {
     const backgroundColor = await page.evaluate(() => {
       return document.querySelector('#catroid .blocklySvg').style.backgroundColor;
@@ -100,10 +105,10 @@ describe('Catroid Integration Advanced Mode tests', () => {
 
     expect(backgroundColor).toBe('rgb(26, 26, 26)');
   });
-  
+
   test('Blocks color test', async () => {
     const allBlocksInAdvancedMode = await page.evaluate(() => {
-      const blocks = document.querySelectorAll(".blocklyPath");
+      const blocks = document.querySelectorAll('.blocklyPath');
       let counter = 0;
       let darkColor = true;
       blocks.forEach(block => {
@@ -119,8 +124,8 @@ describe('Catroid Integration Advanced Mode tests', () => {
 
   test('Blocks select color test', async () => {
     const selectedGlowColour = await page.evaluate(() => {
-      const blocks = document.querySelectorAll(".blocklyPath");
-      return blocks[0].tooltip.workspace.themeManager_.theme_.componentStyles.selectedGlowColour;
+      const blocks = document.querySelectorAll('.blocklyPath');
+      return blocks[0].tooltip.workspace.getTheme().componentStyles.selectedGlowColour;
     });
 
     expect(selectedGlowColour).toBe('#9a9a9a');
@@ -128,7 +133,7 @@ describe('Catroid Integration Advanced Mode tests', () => {
 
   test('Input fields color test', async () => {
     const inputFieldsInAdvancedMode = await page.evaluate(() => {
-      const inputFields = document.querySelectorAll(".blocklyEditableText > rect:not(.blocklyDropdownRect)");
+      const inputFields = document.querySelectorAll('.blocklyEditableText > rect:not(.blocklyDropdownRect)');
       let counter = 0;
       let darkColor = true;
       inputFields.forEach(field => {
@@ -144,13 +149,15 @@ describe('Catroid Integration Advanced Mode tests', () => {
 
   test('JS Syntax characters test', async () => {
     const syntaxCharacters = await page.evaluate(() => {
-      const blocks = document.querySelectorAll(".blocklyPath");
+      const blocks = document.querySelectorAll('.blocklyPath');
       const ifBlock = Array.from(blocks).find(block => block.tooltip.type === 'IfThenLogicBeginBrick');
 
-      if (ifBlock.tooltip.inputList[0].fieldRow[0].value_ === 'If (' &&
-          ifBlock.tooltip.inputList[0].fieldRow[2].value_ === ')' &&
-          ifBlock.tooltip.inputList[0].fieldRow[3].value_ === 'is true then {' &&
-          ifBlock.tooltip.inputList[2].fieldRow[0].value_ === '}') {
+      if (
+        ifBlock.tooltip.inputList[0].fieldRow[0].getValue() === 'If (' &&
+        ifBlock.tooltip.inputList[0].fieldRow[2].getValue() === ')' &&
+        ifBlock.tooltip.inputList[0].fieldRow[3].getValue() === 'is true then {' &&
+        ifBlock.tooltip.inputList[2].fieldRow[0].getValue() === '}'
+      ) {
         return true;
       } else {
         return false;
@@ -162,7 +169,7 @@ describe('Catroid Integration Advanced Mode tests', () => {
 
   test('Smaller vertical spacing test', async () => {
     const blocksHeight = await page.evaluate(() => {
-      const blocks = document.querySelectorAll(".blocklyPath");
+      const blocks = document.querySelectorAll('.blocklyPath');
       const startBlock = Array.from(blocks).find(block => block.tooltip.type === 'StartScript');
       return startBlock.tooltip.height;
     });
@@ -172,10 +179,12 @@ describe('Catroid Integration Advanced Mode tests', () => {
 
   test('Semicolon test', async () => {
     const semicolons = await page.evaluate(() => {
-      const blocks = document.querySelectorAll(".blocklyPath");
-      if (blocks[3].tooltip.inputList[0].fieldRow[5].value_ === ');' &&
-          blocks[12].tooltip.inputList[0].fieldRow[5].value_ === ');' &&
-          blocks[26].tooltip.inputList[0].fieldRow[2].value_ === ');') {
+      const blocks = document.querySelectorAll('.blocklyPath');
+      if (
+        blocks[3].tooltip.inputList[0].fieldRow[5].getValue() === ');' &&
+        blocks[12].tooltip.inputList[0].fieldRow[5].getValue() === ');' &&
+        blocks[26].tooltip.inputList[0].fieldRow[2].getValue() === ');'
+      ) {
         return true;
       } else {
         return false;
@@ -187,9 +196,11 @@ describe('Catroid Integration Advanced Mode tests', () => {
 
   test('Formulas formatting test', async () => {
     const formatted = await page.evaluate(() => {
-      const blocks = document.querySelectorAll(".blocklyPath");
-      if (blocks[4].tooltip.inputList[0].fieldRow[1].value_ === '"currentcaption" = 7' &&
-          blocks[24].tooltip.inputList[0].fieldRow[4].value_ === 'item("currentcaption", *Language List-Caption*)') {
+      const blocks = document.querySelectorAll('.blocklyPath');
+      if (
+        blocks[4].tooltip.inputList[0].fieldRow[1].getValue() === '"currentcaption" = 7' &&
+        blocks[24].tooltip.inputList[0].fieldRow[4].getValue() === 'item("currentcaption", *Language List-Caption*)'
+      ) {
         return true;
       } else {
         return false;
@@ -201,8 +212,8 @@ describe('Catroid Integration Advanced Mode tests', () => {
 
   test('Commented out bricks test', async () => {
     const commentedOut = await page.evaluate(() => {
-      const blocks = document.querySelectorAll(".blocklyPath");
-      return blocks[25].tooltip.inputList[0].fieldRow[0].value_;
+      const blocks = document.querySelectorAll('.blocklyPath');
+      return blocks[25].tooltip.inputList[0].fieldRow[0].getValue();
     });
 
     expect(commentedOut).toBe('// Show variable (');

@@ -625,7 +625,7 @@ export class Catroid {
       // svgElement.setAttribute('class', 'catblocks-brick');
       // svgElement.setAttribute('catroid-category', categoryName);
       // svgElement.setAttribute('catroid-brickType', svgBlock.type);
-      
+
       svgElement.appendChild(clonedBrick);
       svgContainer.appendChild(svgElement);
       brickContainer.appendChild(svgContainer);
@@ -638,30 +638,34 @@ export class Catroid {
 
     $('#catroid-catblocks-add-brick-dialog-content').scrollTop(0);
   }
-  
+
   setAdvancedTheme() {
     const advTheme = Blockly.Theme.defineTheme('advancedTheme', advancedTheme);
     this.workspace.setTheme(advTheme);
     this.readonlyWorkspace.setTheme(advTheme);
-    this.workspace.renderer_.constants_.DUMMY_INPUT_MIN_HEIGHT = 0; // Allows to change size of blocks
-    this.workspace.renderer_.constants_.MEDIUM_PADDING = 5; // Padding of block left & right
-    this.workspace.renderer_.constants_.FIELD_BORDER_RECT_HEIGHT = 14; // Determines height of block with input field
-    this.workspace.renderer_.constants_.FIELD_TEXT_HEIGHT = 14; // Determines height of a block without input field
-    this.workspace.renderer_.constants_.BOTTOM_ROW_AFTER_STATEMENT_MIN_HEIGHT = 14; // Height of bottom part of e.g. 'if' block
-    this.workspace.renderer_.constants_.FIELD_BORDER_RECT_X_PADDING = 0;
-    this.workspace.renderer_.constants_.BETWEEN_STATEMENT_PADDING_Y = 0;
-    this.readonlyWorkspace.renderer_.constants_.BETWEEN_STATEMENT_PADDING_Y = 0;
-    this.readonlyWorkspace.renderer_.constants_.DUMMY_INPUT_MIN_HEIGHT = 0;
-    this.readonlyWorkspace.renderer_.constants_.MEDIUM_PADDING = 5;
-    this.readonlyWorkspace.renderer_.constants_.FIELD_BORDER_RECT_HEIGHT = 30;
-    this.readonlyWorkspace.renderer_.constants_.FIELD_TEXT_HEIGHT = 30;
-    this.readonlyWorkspace.renderer_.constants_.BOTTOM_ROW_AFTER_STATEMENT_MIN_HEIGHT = 30;
-    this.readonlyWorkspace.renderer_.constants_.FIELD_BORDER_RECT_X_PADDING = 0;
-    
+    this.workspace.getRenderer().constants_.DUMMY_INPUT_MIN_HEIGHT = 0; // Allows to change size of blocks
+    this.workspace.getRenderer().constants_.MEDIUM_PADDING = 5; // Padding of block left & right
+    this.workspace.getRenderer().constants_.FIELD_BORDER_RECT_HEIGHT = 14; // Determines height of block with input field
+    this.workspace.getRenderer().constants_.FIELD_TEXT_HEIGHT = 14; // Determines height of a block without input field
+    this.workspace.getRenderer().constants_.BOTTOM_ROW_AFTER_STATEMENT_MIN_HEIGHT = 14; // Height of bottom part of e.g. 'if' block
+    this.workspace.getRenderer().constants_.FIELD_BORDER_RECT_X_PADDING = 0;
+    this.workspace.getRenderer().constants_.BETWEEN_STATEMENT_PADDING_Y = 0;
+    this.readonlyWorkspace.getRenderer().constants_.BETWEEN_STATEMENT_PADDING_Y = 0;
+    this.readonlyWorkspace.getRenderer().constants_.DUMMY_INPUT_MIN_HEIGHT = 0;
+    this.readonlyWorkspace.getRenderer().constants_.MEDIUM_PADDING = 5;
+    this.readonlyWorkspace.getRenderer().constants_.FIELD_BORDER_RECT_HEIGHT = 30;
+    this.readonlyWorkspace.getRenderer().constants_.FIELD_TEXT_HEIGHT = 30;
+    this.readonlyWorkspace.getRenderer().constants_.BOTTOM_ROW_AFTER_STATEMENT_MIN_HEIGHT = 30;
+    this.readonlyWorkspace.getRenderer().constants_.FIELD_BORDER_RECT_X_PADDING = 0;
+
     const styleOfInputFields = document.createElement('style');
     document.head.appendChild(styleOfInputFields);
-    styleOfInputFields.sheet.insertRule('.blocklyNonEditableText > rect:not(.blocklyDropdownRect), .blocklyEditableText > rect:not(.blocklyDropdownRect) {fill: #1a1a1a !important;}');
-    styleOfInputFields.sheet.insertRule('.blocklyNonEditableText > text, .blocklyEditableText > text, .blocklyNonEditableText > g > text, .blocklyEditableText > g > text {fill: #fff !important;}');
+    styleOfInputFields.sheet.insertRule(
+      '.blocklyNonEditableText > rect:not(.blocklyDropdownRect), .blocklyEditableText > rect:not(.blocklyDropdownRect) {fill: #1a1a1a !important;}'
+    );
+    styleOfInputFields.sheet.insertRule(
+      '.blocklyNonEditableText > text, .blocklyEditableText > text, .blocklyNonEditableText > g > text, .blocklyEditableText > g > text {fill: #fff !important;}'
+    );
     styleOfInputFields.sheet.insertRule('#catroid-catblocks-add-brick-dialog {background-color: #1a1a1a !important;}');
     styleOfInputFields.sheet.insertRule('.blocklyMainBackground {stroke-width: 0 !important;}');
     const brickContainer = document.getElementById('catroid-catblocks-bricks-container');
