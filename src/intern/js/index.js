@@ -43,7 +43,7 @@ import { CatblocksMsgs } from '../../library/js/catblocks_msgs';
         renderScripts: true,
         renderLooks: true,
         renderSounds: true,
-        readOnly: true,
+        readOnly: true
       });
       break;
     }
