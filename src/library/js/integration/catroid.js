@@ -535,13 +535,17 @@ export class Catroid {
 
       const categoryNameForID = categoryInfos[idx].name.replace(/\s/, '').toUpperCase();
 
+      const categoryStyle = this.config.advancedMode
+        ? 'background-color:#3c3c3c;color:#b3b3b3;'
+        : `background-color:${categoryColor};color:#fff;`;
+
       injectNewDom(
         'catroid-catblocks-brick-category-container',
         'button',
         {
           class: 'list-group-item list-group-item-action catblocks-block-category-list-item',
           type: 'button',
-          style: `background-color:${categoryColor};color:#fff;`,
+          style: categoryStyle,
           categoryName: categoryInfos[idx].name,
           id: `category${categoryNameForID}`
         },
