@@ -671,7 +671,7 @@ export class Catroid {
     const brickContainer = document.getElementById('catroid-catblocks-bricks-container');
     const headerContainer = document.getElementById('catroid-catblocks-add-brick-dialog-header');
     const textContainer = document.getElementById('catroid-catblocks-add-brick-text-container');
-    brickContainer.setAttribute('class', 'zelos-renderer advancedTheme-theme');
+    brickContainer.setAttribute('class', 'zelos-renderer advancedtheme-theme');
     headerContainer.setAttribute('style', 'background-color: #3c3c3c');
     textContainer.setAttribute('style', 'color: #b3b3b3');
   }
