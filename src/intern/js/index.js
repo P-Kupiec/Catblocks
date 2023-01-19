@@ -44,7 +44,6 @@ import { CatblocksMsgs } from '../../library/js/catblocks_msgs';
         renderLooks: true,
         renderSounds: true,
         readOnly: true,
-        advancedMode: true
       });
       break;
     }

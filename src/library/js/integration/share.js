@@ -26,7 +26,6 @@ import {
   buildUserDefinedBrick
 } from './utils';
 import { CatblocksMsgs } from '../catblocks_msgs';
-import advancedTheme from '../advanced_theme.json';
 
 const all_blocks = new Map();
 const rendered_scenes = new Map();
@@ -76,14 +75,8 @@ export class Share {
     if (this.config.rtl) {
       document.documentElement.style.direction = 'rtl';
     }
-
     await CatblocksMsgs.setLocale(this.config.language, this.config.i18n);
     this.createReadonlyWorkspace();
-
-    if (this.config.advancedMode) {
-      const advTheme = Blockly.Theme.defineTheme('advancedTheme', advancedTheme);
-      this.workspace.setTheme(advTheme);
-    }
   }
 
   /**
