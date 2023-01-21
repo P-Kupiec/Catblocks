@@ -303,7 +303,7 @@ export const renderAndConnectBlocksInList = (parentBrick, brickList, brickListTy
       brickIDGenerator.createBrickID(childBrick);
     }
     if (workspace.getTheme().name === 'advancedtheme') {
-      if (childBrick.styleName_ === 'disabled' || childBrick.type === 'NoteBrick') {
+      if (childBrick.getStyleName() === 'disabled' || childBrick.type === 'NoteBrick') {
         advancedModeCommentOutBricks(childBrick);
       }
     }
@@ -741,7 +741,7 @@ export function advancedModeAddCurlyBrackets(childBrick) {
 }
 
 export function advancedModeAddSemicolonsAndClassifyTopBricks(childBrick) {
-  if (childBrick.type === 'NoteBrick' || childBrick.type === 'UserDefinedScript' || childBrick.styleName_ === 'user') {
+  if (childBrick.type === 'NoteBrick' || childBrick.type === 'UserDefinedScript' || childBrick.getStyleName() === 'user') {
     return;
   }
   if (childBrick.inputList.length === 1) {
